@@ -4,30 +4,48 @@ import initWasm, { fibonacci as fibonacciRust } from "../pkg/test_wasm_rust";
 
 export default function App() {
   const [input, setInput] = createSignal(10);
-  const [jsResult, setJsResult] = createSignal(null);
-  const [rustResult, setRustResult] = createSignal(null);
-  const [jsTime, setJsTime] = createSignal(null);
-  const [rustTime, setRustTime] = createSignal(null);
+  const [jsResult1, setJsResult1] = createSignal(null);
+  const [rustResult1, setRustResult1] = createSignal(null);
+  const [jsTime1, setJsTime1] = createSignal(null);
+  const [rustTime1, setRustTime1] = createSignal(null);
+  const [jsResult2, setJsResult2] = createSignal(null);
+  const [rustResult2, setRustResult2] = createSignal(null);
+  const [jsTime2, setJsTime2] = createSignal(null);
+  const [rustTime2, setRustTime2] = createSignal(null);
 
   const maxInput = 40;
 
   const run = async () => {
     await initWasm();
-
     const n = input();
 
-    const jsStart = performance.now();
-    const jsVal = fibonacciJS(n);
-    const jsEnd = performance.now();
+    // Warmup 전
+    let jsStart = performance.now();
+    let jsVal = fibonacciJS(n);
+    let jsEnd = performance.now();
 
-    const rustStart = performance.now();
-    const rustVal = fibonacciRust(n);
-    const rustEnd = performance.now();
+    let rustStart = performance.now();
+    let rustVal = fibonacciRust(n);
+    let rustEnd = performance.now();
 
-    setJsResult(jsVal);
-    setRustResult(rustVal);
-    setJsTime(jsEnd - jsStart);
-    setRustTime(rustEnd - rustStart);
+    setJsResult1(jsVal);
+    setRustResult1(rustVal);
+    setJsTime1(jsEnd - jsStart);
+    setRustTime1(rustEnd - rustStart);
+
+    // Warmup 후
+    jsStart = performance.now();
+    jsVal = fibonacciJS(n);
+    jsEnd = performance.now();
+
+    rustStart = performance.now();
+    rustVal = fibonacciRust(n);
+    rustEnd = performance.now();
+
+    setJsResult2(jsVal);
+    setRustResult2(rustVal);
+    setJsTime2(jsEnd - jsStart);
+    setRustTime2(rustEnd - rustStart);
   };
 
   return (
@@ -66,14 +84,24 @@ export default function App() {
           </thead>
           <tbody>
             <tr>
-              <td>JavaScript</td>
-              <td>{jsResult()}</td>
-              <td>{jsTime()?.toFixed(3)}</td>
+              <td>JavaScript 워밍업 전</td>
+              <td>{jsResult1()}</td>
+              <td>{jsTime1()?.toFixed(3)}</td>
             </tr>
             <tr>
-              <td>Rust (WASM)</td>
-              <td>{rustResult()}</td>
-              <td>{rustTime()?.toFixed(3)}</td>
+              <td>Rust (WASM) 워밍업 전</td>
+              <td>{rustResult1()}</td>
+              <td>{rustTime1()?.toFixed(3)}</td>
+            </tr>
+            <tr>
+              <td>JavaScript 워밍업 후</td>
+              <td>{jsResult2()}</td>
+              <td>{jsTime2()?.toFixed(3)}</td>
+            </tr>
+            <tr>
+              <td>Rust (WASM) 워밍업 후</td>
+              <td>{rustResult2()}</td>
+              <td>{rustTime2()?.toFixed(3)}</td>
             </tr>
           </tbody>
         </table>
