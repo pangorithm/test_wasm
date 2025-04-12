@@ -5,3 +5,5 @@ cargo new --lib test_wasm_rust
 cd test_wasm_rust  
 wasm-pack build --target web  
 mv pkg ../test_wasm_front  
+
+https://pangorithm.github.io/test_wasm/

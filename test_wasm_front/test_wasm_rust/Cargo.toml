@@ -1,0 +1,15 @@
+[package]
+name = "test_wasm_rust"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"] # WASM으로 빌드하려면 필요함
+
+[dependencies]
+wasm-bindgen = "*"
+sqlite-wasm-rs = { version = "*", default-features = false, features = ["precompiled"] }
+serde_json = "*"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
