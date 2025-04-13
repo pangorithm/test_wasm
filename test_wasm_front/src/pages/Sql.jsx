@@ -8,9 +8,7 @@ const exampleQueries = [
   `CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,age INTEGER);`,
   `SELECT name FROM sqlite_master WHERE type='table';`,
   `INSERT INTO users (name, age) VALUES ('Alice', 30);`,
-  `INSERT INTO users (name, age) VALUES
-    ('Bob', 25),
-    ('Charlie', 35);`,
+  `INSERT INTO users (name, age) VALUES ('Bob', 25), ('Charlie', 35);`,
   `SELECT * FROM users;`,
   `SELECT * FROM users WHERE id = 1;`,
   `SELECT * FROM users WHERE age > 30;`,
